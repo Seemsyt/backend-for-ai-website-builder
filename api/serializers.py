@@ -17,6 +17,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "avatar_url",
+            "credits",
         )
 
 
@@ -38,7 +39,7 @@ class PlanFeatureSerializer(serializers.ModelSerializer):
 class WebsiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Website
-        fields = ("id", "name", "domain", "created_at", "updated_at")
+        fields = ("id", "name", "code", "domain", "deploy_url", "deployed_at", "created_at", "updated_at")
 
 
 class ChatMessageSerializer(serializers.ModelSerializer):
@@ -55,3 +56,17 @@ class ChatThreadSerializer(serializers.ModelSerializer):
         model = ChatThread
         fields = ("id", "owner", "title", "is_archived", "created_at", "updated_at", "messages")
         read_only_fields = ("id", "owner", "created_at", "updated_at", "messages")
+
+
+class ChatThreadListItemSerializer(serializers.ModelSerializer):
+    last_message = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ChatThread
+        fields = ("id", "title", "updated_at", "last_message")
+
+    def get_last_message(self, obj):
+        message = obj.messages.order_by("-sequence", "-created_at").first()
+        if not message:
+            return ""
+        return message.content[:120]

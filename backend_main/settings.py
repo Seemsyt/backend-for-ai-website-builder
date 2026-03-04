@@ -66,7 +66,7 @@ WSGI_APPLICATION = 'backend_main.wsgi.application'
 
 CORS_ALLOWED_ORIGINS = [
     "https://example.com",
-    "https://sub.example.com",
+    "http://192.168.218.96:3000",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
@@ -147,3 +147,14 @@ OPENROUTER_URL = os.getenv(
     os.getenv("open_raouter_url", "https://openrouter.ai/api/v1/chat/completions"),
 ).strip()
 OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "qwen/qwen3.5-flash-02-23").strip()
+
+
+def _env_int(name: str, default: int) -> int:
+    try:
+        value = int(os.getenv(name, str(default)).strip())
+        return value if value > 0 else default
+    except Exception:
+        return default
+
+
+OPENROUTER_MAX_TOKENS = _env_int("OPENROUTER_MAX_TOKENS", 3500)

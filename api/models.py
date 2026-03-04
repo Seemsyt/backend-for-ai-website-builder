@@ -74,6 +74,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     google_sub = models.CharField(max_length=255, unique=True, null=True, blank=True)
     avatar_url = models.URLField(blank=True)
+    credits = models.PositiveIntegerField(default=20)
     plan = models.ForeignKey(
         Plan,
         on_delete=models.SET_NULL,
@@ -87,13 +88,17 @@ class User(AbstractUser):
 class Website(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="websites")
     name = models.CharField(max_length=255 , default='untitled')
+    code = models.TextField(blank=True, default="")
     domain = models.CharField(max_length=255, unique=True)
+    deploy_url = models.URLField(blank=True, default="")
+    deployed_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+
     def save(self, *args, **kwargs):
         if not self.domain:
-            self.domain = f"{self.name.lower().replace(' ', '-')}-{self.owner.username.lower()}-{self.owner.id}-{self.id}-{random.randint(1000, 9999)}"
+            self.domain = f"{self.name.lower().replace(' ', '-')}-{self.owner.username.lower()}-{self.owner.id}-{random.randint(1000, 9999)}"
         super().save(*args, **kwargs)
