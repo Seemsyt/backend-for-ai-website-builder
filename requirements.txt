@@ -8,3 +8,4 @@ whitenoise
 python-dotenv
 psycopg2-binary
 cryptography
+dj_database_url
