@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-r0jm01&(op+cx&fw$l$y5xrf9&ip4ei2vdhwfiywjjbw46kr2^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1","https://backend-for-ai-website-builder.onrender.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1","backend-for-ai-website-builder.onrender.com"]
 
 
 # Application definition
