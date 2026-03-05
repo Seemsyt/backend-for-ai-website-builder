@@ -65,7 +65,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend_main.wsgi.application'
 
 CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
+    "https://sgenai.vercel.app",
     "http://192.168.218.96:3000",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
